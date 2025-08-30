@@ -306,12 +306,12 @@
     "why": {
       "title": "Why Choose Marln?",
       "subtitle": "We believe that technical excellence should be accessible to everyone.",
-      "item1": { "title": "10+ Years Experience", "text": "A decade of experience in software development, AI, and digital transformation." },
+      "item1": { "title": "Proven Results", "text": "70+ brands launched. 12+ products deployed. Backed by results, trusted by startups, enterprises, and public institutions." },
       "item2": { "title": "Individual Approach", "text": "No one-size-fits-all solutions. Every client gets a customized solution, aligned with their goals, size, and culture." },
       "item3": { "title": "Advanced Technology", "text": "We use the latest technologies and tools to ensure your solutions are cutting-edge and future-ready." },
       "item4": { "title": "Seamless Integration", "text": "Our solutions integrate easily with your existing tools and workflows." },
-      "item5": { "title": "Compliance", "text": "Compliance is fundamental, not an afterthought." },
-      "item6": { "title": "Guaranteed Results", "text": "We commit to delivering the desired results and ensuring customer satisfaction." }
+      "item5": { "title": "Compliance", "text": "Compliance is built-in, not bolted on. From data handling to deployment, we ensure your systems meet regulatory and ethical standards." },
+      "item6": { "title": "AI-Features", "text": "AI that works where it matters. Whether it's smart CRMs, adaptive UX, or real-time insights we integrate AI for real business impact." }
     },
     "ai": {
       "title": "AI that works where it matters",
