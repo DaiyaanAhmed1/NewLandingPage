@@ -5,6 +5,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons CDN for Interactive MARLN Grid -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <style>
 /* ===== ARABIC FONT DEFINITION ===== */
 /* Noto Sans Arabic - Google Fonts with Fallbacks */
@@ -466,6 +469,478 @@ p, div, span, a, li, td, th, input, textarea, button {
         max-width: 130px !important;
     }
 }
+
+/* ===== INTERACTIVE MARLN GRID STYLES ===== */
+/* Letters Grid */
+.marln-letters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    justify-items: center;
+}
+
+/* Small Mobile Phones (320px - 375px) */
+@media (max-width: 375px) {
+    .marln-letters-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.5rem;
+        margin: 0 auto 2rem auto;
+        padding: 0 0.75rem;
+        max-width: 100%;
+    }
+}
+
+/* Standard Mobile Portrait (376px - 480px) */
+@media (min-width: 376px) and (max-width: 480px) {
+    .marln-letters-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.75rem;
+        margin: 0 auto 2rem auto;
+        padding: 0 1rem;
+        max-width: 100%;
+    }
+}
+
+/* Large Mobile / Small Tablet (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+    .marln-letters-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1rem;
+        max-width: 600px;
+        margin: 0 auto 2rem auto;
+        padding: 0 1.5rem;
+    }
+}
+
+/* Tablet Portrait (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .marln-letters-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1.5rem;
+        max-width: 800px;
+        margin: 0 auto 2rem auto;
+    }
+}
+
+/* Tablet and up - 5 columns */
+@media (min-width: 768px) {
+    .marln-letters-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+.marln-letter-card {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 1rem;
+    padding: 2rem;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.marln-letter-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.marln-letter-card.selected {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.5);
+}
+
+.marln-letter-card.active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+/* Letter Card Gradients - Using original about-us colors */
+.marln-letter-card.m-card {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3282b8 50%, #0f4c75 100%);
+}
+
+.marln-letter-card.a-card {
+    background: linear-gradient(135deg, #059669 0%, #10b981 50%, #047857 100%);
+}
+
+.marln-letter-card.r-card {
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #b91c1c 100%);
+}
+
+.marln-letter-card.l-card {
+    background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #6d28d9 100%);
+}
+
+.marln-letter-card.n-card {
+    background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #c2410c 100%);
+}
+
+.marln-letter-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: white;
+    text-align: center;
+}
+
+.marln-letter-icon {
+    margin-bottom: 0.5rem;
+    transition: transform 0.5s ease;
+}
+
+.marln-letter-card.selected .marln-letter-icon {
+    transform: rotate(360deg);
+}
+
+.marln-letter-main {
+    font-size: 4rem;
+    font-weight: 900;
+    transition: transform 0.3s ease;
+}
+
+.marln-letter-card.selected .marln-letter-main {
+    transform: scale(1.1);
+}
+
+.marln-letter-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    opacity: 0.9;
+}
+
+.marln-hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.marln-letter-card:hover .marln-hover-overlay {
+    opacity: 1;
+}
+
+/* Description Panel */
+.marln-description-panel {
+    border-radius: 1rem;
+    padding: 2rem;
+    color: white !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 0;
+    overflow: hidden;
+}
+
+/* Ensure all text inside description panel is white */
+.marln-description-panel *,
+.marln-description-panel h2,
+.marln-description-panel p,
+.marln-description-panel span,
+.marln-description-panel div {
+    color: white !important;
+}
+
+.marln-description-panel.visible {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 500px;
+}
+
+.marln-description-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.marln-description-icon-container {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0) rotate(-180deg);
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.marln-description-panel.visible .marln-description-icon-container {
+    transform: scale(1) rotate(0deg);
+    transition-delay: 0.2s;
+}
+
+.marln-description-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.marln-description-title {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    color: white !important;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s ease;
+}
+
+.marln-description-panel.visible .marln-description-title {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.3s;
+}
+
+.marln-description-body {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: white !important;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s ease;
+}
+
+.marln-description-panel.visible .marln-description-body {
+    opacity: 0.95;
+    transform: translateX(0);
+    transition-delay: 0.4s;
+}
+
+.marln-close-button {
+    flex-shrink: 0;
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform: scale(0);
+    font-size: 14px;
+}
+
+.marln-description-panel.visible .marln-close-button {
+    transform: scale(1);
+    transition-delay: 0.5s;
+}
+
+.marln-close-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.marln-close-button:active {
+    transform: scale(0.95);
+}
+
+/* Call to Action */
+.marln-cta {
+    text-align: center;
+    margin-top: 3rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.marln-cta.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.marln-cta-text {
+    font-size: 1.2rem;
+    color: #6b7280;
+    transition: color 0.3s ease;
+}
+
+/* Small Mobile Phones Responsive Design */
+@media (max-width: 375px) {
+    .marln-letter-card {
+        padding: 0.75rem 0.5rem;
+        border-radius: 0.5rem;
+    }
+
+    .marln-letter-main {
+        font-size: 1.8rem;
+    }
+
+    /* Hide icons and titles on small mobile */
+    .marln-letter-icon,
+    .marln-letter-title {
+        display: none;
+    }
+
+    .marln-letter-content {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .marln-description-title {
+        font-size: 1.2rem;
+    }
+
+    .marln-description-body {
+        font-size: 0.85rem;
+    }
+}
+
+/* Standard Mobile Portrait Responsive Design */
+@media (min-width: 376px) and (max-width: 480px) {
+    .marln-letter-card {
+        padding: 1rem;
+        border-radius: 0.75rem;
+    }
+
+    .marln-letter-main {
+        font-size: 2.2rem;
+    }
+
+    /* Hide icons and titles on mobile */
+    .marln-letter-icon,
+    .marln-letter-title {
+        display: none;
+    }
+
+    .marln-letter-content {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .marln-description-title {
+        font-size: 1.3rem;
+    }
+
+    .marln-description-body {
+        font-size: 0.9rem;
+    }
+}
+
+/* Large Mobile / Small Tablet Responsive Design */
+@media (min-width: 481px) and (max-width: 767px) {
+    .marln-letter-card {
+        padding: 1.75rem;
+    }
+
+    .marln-letter-main {
+        font-size: 3.2rem;
+    }
+
+    .marln-letter-title {
+        font-size: 0.95rem;
+    }
+
+    /* Show icons and titles on larger devices */
+    .marln-letter-icon,
+    .marln-letter-title {
+        display: block;
+    }
+
+    .marln-description-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .marln-description-icon-container {
+        width: 70px;
+        height: 70px;
+    }
+
+    .marln-description-title {
+        font-size: 1.6rem;
+    }
+
+    .marln-description-body {
+        font-size: 1.1rem;
+    }
+}
+
+/* Tablet Portrait (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .marln-letter-card {
+        padding: 2rem;
+    }
+
+    .marln-letter-main {
+        font-size: 3.8rem;
+    }
+
+    .marln-letter-title {
+        font-size: 1rem;
+    }
+
+    .marln-description-content {
+        flex-direction: row;
+        text-align: left;
+        gap: 2rem;
+    }
+
+    .marln-description-icon-container {
+        width: 80px;
+        height: 80px;
+    }
+
+    .marln-description-title {
+        font-size: 1.8rem;
+    }
+
+    .marln-description-body {
+        font-size: 1.15rem;
+    }
+}
+
+/* Desktop and larger tablets */
+@media (min-width: 1025px) {
+    .marln-description-content {
+        flex-direction: row;
+        text-align: left;
+    }
+
+    .marln-description-icon-container {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* Animation classes */
+@keyframes marlnFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.marln-letter-card {
+    animation: marlnFadeInUp 0.6s ease forwards;
+}
+
+.marln-letter-card:nth-child(1) { animation-delay: 0.1s; }
+.marln-letter-card:nth-child(2) { animation-delay: 0.2s; }
+.marln-letter-card:nth-child(3) { animation-delay: 0.3s; }
+.marln-letter-card:nth-child(4) { animation-delay: 0.4s; }
+.marln-letter-card:nth-child(5) { animation-delay: 0.5s; }
+
 </style><style>
 /* ===== LOGO SWITCHING LOGIC ===== */
 /* Default Logo Display (Light Mode) */
@@ -1382,23 +1857,19 @@ html[data-theme="dark"] .mobile-menu-container {
 @media (min-width: 769px) and (max-width: 1024px) {
     .mobile-menu-overlay {
         backdrop-filter: blur(15px);
+        /* Lower z-index to prevent conflicts */
+        z-index: 9999;
     }
     
     .mobile-menu-container {
         max-width: 400px;
         box-shadow: -8px 0 25px rgba(0, 0, 0, 0.15);
-    }
-    
-    /* Ensure proper z-index for tablet */
-    .mobile-menu-overlay {
-        z-index: 10000;
-    }
-    
-    /* Fix tablet menu positioning */
-    .mobile-menu-container {
+        /* Ensure proper positioning without transform conflicts */
         transform: translateX(100%);
         -webkit-transform: translateX(100%);
         -ms-transform: translateX(100%);
+        /* Add will-change for better performance */
+        will-change: transform;
     }
     
     .mobile-menu-overlay.active .mobile-menu-container {
@@ -1406,6 +1877,96 @@ html[data-theme="dark"] .mobile-menu-container {
         -webkit-transform: translateX(0);
         -ms-transform: translateX(0);
     }
+    
+    /* Prevent tablet menu from interfering with page content */
+    .mobile-menu-overlay:not(.active) {
+        pointer-events: none;
+        visibility: hidden;
+    }
+    
+    .mobile-menu-overlay.active {
+        pointer-events: auto;
+        visibility: visible;
+    }
+}
+
+/* Additional tablet-specific protections */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Prevent tablet menu from affecting page layout */
+    body:has(.mobile-menu-overlay.active) {
+        overflow: hidden;
+    }
+    
+    /* Ensure main content is properly positioned */
+    .about-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Prevent tablet menu from overlapping critical content */
+    .mobile-menu-overlay {
+        isolation: isolate;
+    }
+    
+    /* Ensure proper stacking context */
+    .mobile-menu-container {
+        position: relative;
+        z-index: 2;
+    }
+    
+    /* Final safety - ensure mobile menu is properly hidden when not active */
+.mobile-menu-overlay:not(.active) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateX(100%) !important;
+    -webkit-transform: translateX(100%) !important;
+    -ms-transform: translateX(100%) !important;
+}
+
+/* Force reset any conflicting styles but keep menu accessible */
+.mobile-menu-overlay:not(.active) * {
+    pointer-events: none !important;
+}
+
+/* Additional tablet safety - completely hide mobile menu on non-tablet devices */
+@media (min-width: 1025px) {
+    .mobile-menu-overlay {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+}
+
+/* Force hide mobile menu when page is not in tablet mode */
+@media (max-width: 768px), (min-width: 1025px) {
+    .mobile-menu-overlay:not(.active) {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transform: translateX(100%) !important;
+        -webkit-transform: translateX(100%) !important;
+        -ms-transform: translateX(100%) !important;
+    }
+}
+
+/* Nuclear option - completely remove mobile menu from non-tablet devices */
+@media (min-width: 1025px) {
+    .mobile-menu-overlay {
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
+        width: 1px !important;
+        height: 1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        margin: -1px !important;
+        padding: 0 !important;
+        border: 0 !important;
+    }
+}
 }
 
 /* Mobile Menu Header */
@@ -1795,32 +2356,105 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <h2 style="font-size: 3.5rem; font-weight: 700; color: #2d3748; margin-bottom: 30px; text-align: center;" data-i18n="about.story.title">Our Story</h2>
                 <p style="font-size: 1.4rem; line-height: 1.8; color: #4a5568; max-width: 900px; margin: 0 auto 40px auto; text-align: justify; text-justify: inter-word; hyphens: auto; word-spacing: 0.5px;" data-i18n="about.story.description">The name "Marln" embodies a powerful narrative centered around the qualities that reflect the company's commitment to empowering women in technology and fostering a diverse, inclusive environment.</p>
                 
-                <!-- MARLN Letters in Colored Boxes -->
-                <div style="display: flex; justify-content: center; gap: 15px; margin: 15px 0; flex-wrap: wrap;">
-                    <div style="text-align: center; max-width: 180px;">
-                        <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3282b8 50%, #0f4c75 100%); color: white; width: 70px; height: 70px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 700; box-shadow: 0 8px 25px rgba(30, 58, 138, 0.3); margin: 0 auto 12px auto;">M</div>
-                        <h3 style="font-size: 1.1rem; font-weight: 600; color: #2d3748; margin-bottom: 6px;" data-i18n="about.story.mentorship.title">Mentorship</h3>
-                        <p style="font-size: 0.85rem; line-height: 1.5; color: #4a5568; text-align: center;" data-i18n="about.story.mentorship.description">M stands for Mentorship, highlighting Marln's dedication to supporting and guiding women in their professional journeys.</p>
+                <!-- Interactive MARLN Letters Grid -->
+                <div id="marlnGridContainer" style="margin: 40px auto; max-width: 1000px;">
+                    <!-- Letters Grid -->
+                    <div class="marln-letters-grid">
+                        <!-- M Card -->
+                        <div class="marln-letter-card m-card" data-letter="M" 
+                             data-title-key="about.story.mentorship.title"
+                             data-description-key="about.story.mentorship.description"
+                             data-gradient="linear-gradient(135deg, #1e3a8a 0%, #3282b8 50%, #0f4c75 100%)">
+                            <div class="marln-letter-content">
+                                <div class="marln-letter-icon">
+                                    <i data-lucide="users" size="32"></i>
+                                </div>
+                                <span class="marln-letter-main">M</span>
+                                <span class="marln-letter-title" data-i18n="about.story.mentorship.title">Mentorship</span>
+                            </div>
+                            <div class="marln-hover-overlay"></div>
+                        </div>
+
+                        <!-- A Card -->
+                        <div class="marln-letter-card a-card" data-letter="A" 
+                             data-title-key="about.story.advocacy.title"
+                             data-description-key="about.story.advocacy.description"
+                             data-gradient="linear-gradient(135deg, #059669 0%, #10b981 50%, #047857 100%)">
+                            <div class="marln-letter-content">
+                                <div class="marln-letter-icon">
+                                    <i data-lucide="shield" size="32"></i>
+                                </div>
+                                <span class="marln-letter-main">A</span>
+                                <span class="marln-letter-title" data-i18n="about.story.advocacy.title">Advocacy</span>
+                            </div>
+                            <div class="marln-hover-overlay"></div>
+                        </div>
+
+                        <!-- R Card -->
+                        <div class="marln-letter-card r-card" data-letter="R" 
+                             data-title-key="about.story.resilience.title"
+                             data-description-key="about.story.resilience.description"
+                             data-gradient="linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #b91c1c 100%)">
+                            <div class="marln-letter-content">
+                                <div class="marln-letter-icon">
+                                    <i data-lucide="heart" size="32"></i>
+                                </div>
+                                <span class="marln-letter-main">R</span>
+                                <span class="marln-letter-title" data-i18n="about.story.resilience.title">Resilience</span>
+                            </div>
+                            <div class="marln-hover-overlay"></div>
+                        </div>
+
+                        <!-- L Card -->
+                        <div class="marln-letter-card l-card" data-letter="L" 
+                             data-title-key="about.story.leadership.title"
+                             data-description-key="about.story.leadership.description"
+                             data-gradient="linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #6d28d9 100%)">
+                            <div class="marln-letter-content">
+                                <div class="marln-letter-icon">
+                                    <i data-lucide="crown" size="32"></i>
+                                </div>
+                                <span class="marln-letter-main">L</span>
+                                <span class="marln-letter-title" data-i18n="about.story.leadership.title">Leadership</span>
+                            </div>
+                            <div class="marln-hover-overlay"></div>
+                        </div>
+
+                        <!-- N Card -->
+                        <div class="marln-letter-card n-card" data-letter="N" 
+                             data-title-key="about.story.nurturing.title"
+                             data-description-key="about.story.nurturing.description"
+                             data-gradient="linear-gradient(135deg, #ea580c 0%, #f97316 50%, #c2410c 100%)">
+                            <div class="marln-letter-content">
+                                <div class="marln-letter-icon">
+                                    <i data-lucide="sparkles" size="32"></i>
+                                </div>
+                                <span class="marln-letter-main">N</span>
+                                <span class="marln-letter-title" data-i18n="about.story.nurturing.title">Nurturing</span>
+                            </div>
+                            <div class="marln-hover-overlay"></div>
+                        </div>
                     </div>
-                    <div style="text-align: center; max-width: 180px;">
-                        <div style="background: linear-gradient(135deg, #059669 0%, #10b981 50%, #047857 100%); color: white; width: 70px; height: 70px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 700; box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3); margin: 0 auto 12px auto;">A</div>
-                        <h3 style="font-size: 1.1rem; font-weight: 600; color: #2d3748; margin-bottom: 6px;" data-i18n="about.story.advocacy.title">Advocacy</h3>
-                        <p style="font-size: 0.85rem; line-height: 1.5; color: #4a5568; text-align: center;" data-i18n="about.story.advocacy.description">A represents Advocacy, as Marln actively champions the advancement of women in technology.</p>
+
+                    <!-- Description Panel -->
+                    <div id="marlnDescriptionPanel" class="marln-description-panel">
+                        <div class="marln-description-content">
+                            <div class="marln-description-icon-container">
+                                <i id="marlnDescriptionIcon" data-lucide="users" size="40"></i>
+                            </div>
+                            <div class="marln-description-text">
+                                <h2 id="marlnDescriptionTitle" class="marln-description-title" data-i18n="">Title</h2>
+                                <p id="marlnDescriptionBody" class="marln-description-body" data-i18n="">Description text goes here...</p>
+                            </div>
+                            <button id="marlnCloseButton" class="marln-close-button" data-i18n="about.story.close">Close</button>
+                        </div>
                     </div>
-                    <div style="text-align: center; max-width: 180px;">
-                        <div style="background: linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #b91c1c 100%); color: white; width: 70px; height: 70px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 700; box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3); margin: 0 auto 12px auto;">R</div>
-                        <h3 style="font-size: 1.1rem; font-weight: 600; color: #2d3748; margin-bottom: 6px;" data-i18n="about.story.resilience.title">Resilience</h3>
-                        <p style="font-size: 0.85rem; line-height: 1.5; color: #4a5568; text-align: center;" data-i18n="about.story.resilience.description">R signifies Resilience, reflecting the strength and determination of women navigating the challenges of the tech landscape.</p>
-                    </div>
-                    <div style="text-align: center; max-width: 180px;">
-                        <div style="background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #6d28d9 100%); color: white; width: 70px; height: 70px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 700; box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3); margin: 0 auto 12px auto;">L</div>
-                        <h3 style="font-size: 1.1rem; font-weight: 600; color: #2d3748; margin-bottom: 6px;" data-i18n="about.story.leadership.title">Leadership</h3>
-                        <p style="font-size: 0.85rem; line-height: 1.5; color: #4a5568; text-align: center;" data-i18n="about.story.leadership.description">L stands for Leadership, emphasizing the importance of female leadership within the organization and the tech sector.</p>
-                    </div>
-                    <div style="text-align: center; max-width: 180px;">
-                        <div style="background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #c2410c 100%); color: white; width: 70px; height: 70px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 700; box-shadow: 0 8px 25px rgba(234, 88, 12, 0.3); margin: 0 auto 12px auto;">N</div>
-                        <h3 style="font-size: 1.1rem; font-weight: 600; color: #2d3748; margin-bottom: 6px;" data-i18n="about.story.nurturing.title">Nurturing</h3>
-                        <p style="font-size: 0.85rem; line-height: 1.5; color: #4a5568; text-align: center;" data-i18n="about.story.nurturing.description">N embodies Nurturing, representing Marln's commitment to creating a supportive community for women in tech.</p>
+
+                    <!-- Call to Action -->
+                    <div id="marlnCta" class="marln-cta visible">
+                        <p class="marln-cta-text" id="marlnCtaText" data-i18n="about.story.cta">
+                            Click on any letter to discover its meaning and impact
+                        </p>
                     </div>
                 </div>
                 
@@ -1873,34 +2507,7 @@ Kick Start Your Project Right Now</h2><div class="wpcf7 no-js" id="wpcf7-f206-o1
 <input class="wpcf7-form-control wpcf7-hidden" value="" type="hidden" name="user_agent"><input class="wpcf7-form-control wpcf7-hidden" value="" type="hidden" name="referrers">
 <input class="wpcf7-form-control wpcf7-hidden" value="" type="hidden" name="pathHistory">
 <input class="wpcf7-form-control wpcf7-hidden" value="" type="hidden" name="ClientID">
-<input class="wpcf7-form-control wpcf7-submit has-spinner" type="submit" value="send message" data-i18n-value="index.contact.form.submit"><div class="wpcf7-response-output" aria-hidden="true"></div></form></div></div></div></div><div class="contact-us--col"><div class="contact-us--block contact-us--info"><ul class="contact-us--managers"><li class="contact-us--manager"><figure class="contact-us--manager--avatar">
-<a href="https://www.linkedin.com/in/shadia-zaineddeen-2b09ba60/" title="Social link to Shadia Zaineddeen" target="_blank">
-<img decoding="async" width="1275" height="1278" src="images/image-71.jpeg" class="attachment-full size-full wp-post-image" alt="Shadia Zaineddeen Photo" title="Shadia Zaineddeen Photo"><div class="contact-us--manager--avatar--icon">
-<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-<g clip-path="url(#clip0_1780_8744_0)">
-<path d="M12.5 24.9999C19.4036 24.9999 25 19.4034 25 12.4999C25 5.5963 19.4036 -0.000141144 12.5 -0.000141144C5.59644 -0.000141144 0 5.5963 0 12.4999C0 19.4034 5.59644 24.9999 12.5 24.9999Z" fill="#0077B5"></path>
-<path d="M19.9685 13.5055V18.659H16.9806V13.8509C16.9806 12.6437 16.5492 11.8192 15.4674 11.8192C14.6419 11.8192 14.1514 12.3743 13.9348 12.9117C13.8562 13.1038 13.8359 13.3705 13.8359 13.6399V18.6588H10.8478C10.8478 18.6588 10.8879 10.5155 10.8478 9.67253H13.8361V10.946C13.8301 10.956 13.8226 10.9658 13.8173 10.9754H13.8371V10.946C14.2342 10.335 14.9423 9.46151 16.5299 9.46151C18.4957 9.46151 19.9694 10.7459 19.9694 13.5055ZM7.72302 5.34082C6.70092 5.34082 6.03223 6.01174 6.03223 6.89324C6.03223 7.75601 6.68154 8.44632 7.6838 8.44632H7.70319C8.74534 8.44632 9.39331 7.75601 9.39331 6.89324C9.37348 6.01174 8.74534 5.34082 7.72302 5.34082ZM6.20982 18.659H9.19678V9.67253H6.20982V18.659Z" fill="#FFFFFF"></path>
-</g>
-<defs>
-<clipPath id="clip0_1780_8744_0">
-<rect width="25" height="25" fill="white"></rect>
-</clipPath>
-</defs>
-</svg></div>
-</a></figure>                    <p class="sh-1 font-medium" data-i18n="index.contact.info.manager.name">
-Shadia Zaineddeen</p><p class="caption uppercase" data-i18n="index.contact.info.manager.position">
-Executive Director</p></li></ul><div class="contact-us--connect"><div class="contact-us--connect--wrapper"><div class="contact-us--connect--item">                    <p class="heading h5 uppercase" data-i18n="index.contact.info.title">
-Send us an email</p><div class="">
-<a href="mailto:contact@marlncorp.com" title="Mail to contact@marlncorp.com" class="btn btn-small btn-dark">
-<span class="btn-text">contact@marlncorp.com</span>
-<span class="btn-drop-right-items copy-to-clipboard" data-copy="contact@marlncorp.com">
-<span> 
-<svg xmlns="http://www.w3.org/2000/svg" width="10" height="11" viewBox="0 0 10 11" fill="none">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M7.74121 1.94165H8.79502V1.94344C9.12758 1.94434 9.42904 2.08398 9.64671 2.31047C9.86266 2.53516 9.99741 2.84578 9.99827 3.18953H10V9.75122H9.99827C9.99741 10.095 9.86266 10.4074 9.64412 10.6339C9.42731 10.8577 9.12758 10.9973 8.79589 10.9982V11H3.46376V10.9982C3.13207 10.9973 2.82975 10.8577 2.61208 10.6312C2.39613 10.4065 2.26138 10.0959 2.26052 9.75212H2.25879V8.28133H1.20498V8.27954C0.873283 8.27865 0.57096 8.139 0.353287 7.91252C0.137341 7.68783 0.00259134 7.3772 0.00172756 7.03345H0V1.24878H0.00172756C0.00259134 0.904134 0.138205 0.591716 0.355878 0.36613C0.572687 0.142334 0.872419 0.00268555 1.20411 0.00179036V0H6.53624V0.00179036C6.86879 0.00268555 7.17025 0.142334 7.38792 0.368815C7.60387 0.593506 7.73862 0.904134 7.73948 1.24788H7.74121V1.94165ZM6.82733 1.94165V1.24788H6.82906C6.82906 1.16642 6.79537 1.09123 6.74182 1.03573C6.68913 0.98112 6.6157 0.946208 6.5371 0.946208V0.947998H1.20498V0.946208C1.12637 0.946208 1.05381 0.98112 1.00026 1.03662C0.947568 1.09123 0.913881 1.16732 0.913881 1.24878H0.915609V7.03345H0.913881C0.913881 7.11491 0.947568 7.1901 1.00112 7.24561C1.05381 7.30021 1.12724 7.33512 1.20584 7.33512V7.33333H2.25965V3.19043H2.26138C2.26224 2.84578 2.39786 2.53337 2.61553 2.30778C2.83234 2.08398 3.13207 1.94434 3.46376 1.94344V1.94165H6.82733ZM9.08526 3.18953H9.08698C9.08698 3.10807 9.0533 3.03288 8.99974 2.97738C8.94705 2.92277 8.87363 2.88786 8.79502 2.88786V2.88965H3.4629V2.88786C3.3843 2.88786 3.31174 2.92277 3.25818 2.97827C3.20549 3.03288 3.17181 3.10897 3.17181 3.19043H3.17353V9.75212H3.17181C3.17181 9.83358 3.20549 9.90877 3.25905 9.96427C3.31174 10.0189 3.38516 10.0538 3.46376 10.0538V10.052H8.79589V10.0538C8.87449 10.0538 8.94705 10.0189 9.0006 9.96338C9.0533 9.90877 9.08698 9.83268 9.08698 9.75122H9.08526V3.18953Z" fill="#0C081E"></path>
-</svg>
-</span>
-</span>
-</a></div></div></div></div></div></div></div></div></section></main><footer id="footer" class="footer"><div class="container"><div class="footer-wrapper"><div class="footer-col-left"><div class="footer-menus"><div class="footer-menu"><ul id="footer_menu_4" class="footer-menu--items"><li id="menu-item-161" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-161"><a href="#" data-i18n="footer.social">Social Links</a><ul class="sub-menu"><li id="menu-item-1685" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1685"><a href="https://www.linkedin.com/company/marln-corp/" target="_blank" data-i18n="footer.socialLinks.linkedin">LinkedIn</a></li><li id="menu-item-678" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-678"><a href="https://www.instagram.com/marlncorp/" target="_blank" data-i18n="footer.socialLinks.instagram">Instagram</a></li><li id="menu-item-1684" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1684"><a href="mailto:contact@marlncorp.com" data-i18n="footer.socialLinks.email">Email</a></li></ul></li></ul></div><div class="footer-menu"><ul id="footer_menu_5" class="footer-menu--items"><li id="menu-item-758" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-758"><a href="#" data-i18n="footer.certifications">Certifications</a><ul class="sub-menu"><li id="menu-item-2068" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2068"><a href="https://www.wbenc.org/" target="_blank">Women Owned (WBENC)</a></li><li id="menu-item-2069" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2069"><a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/part-11-electronic-records-electronic-signatures-scope-and-application" target="_blank">FDA 21 CFR Part 11</a></li><li id="menu-item-2070" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2070"><a href="https://gdpr.eu/" target="_blank">GDPR Compliance</a></li><li id="menu-item-2071" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2071"><a href="https://www.iso.org/iso-9001-quality-management.html" target="_blank">ISO 9001:2015</a></li><li id="menu-item-2072" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2072"><a href="https://www.iso.org/iso-20000-1-it-service-management.html" target="_blank">ISO 20000-1:2018</a></li><li id="menu-item-2073" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2073"><a href="https://www.iso.org/iso-27001-information-security.html" target="_blank">ISO 27001:2022</a></li></ul></li></ul></div><div class="footer-menu"><div class="offices"><p class="offices-title" data-i18n="footer.officesTitle">
+<input class="wpcf7-form-control wpcf7-submit has-spinner" type="submit" value="send message" data-i18n-value="index.contact.form.submit"><div class="wpcf7-response-output" aria-hidden="true"></div></form></div></div></div></div></div></div></div></div></section></main><footer id="footer" class="footer"><div class="container"><div class="footer-wrapper"><div class="footer-col-left"><div class="footer-menus"><div class="footer-menu"><ul id="footer_menu_4" class="footer-menu--items"><li id="menu-item-161" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-161"><a href="#" data-i18n="footer.social">Social Links</a><ul class="sub-menu"><li id="menu-item-1685" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1685"><a href="https://www.linkedin.com/company/marln-corp/" target="_blank" data-i18n="footer.socialLinks.linkedin">LinkedIn</a></li><li id="menu-item-678" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-678"><a href="https://www.instagram.com/marlncorp/" target="_blank" data-i18n="footer.socialLinks.instagram">Instagram</a></li><li id="menu-item-1684" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1684"><a href="mailto:contact@marlncorp.com" data-i18n="footer.socialLinks.email">Email</a></li></ul></li></ul></div><div class="footer-menu"><ul id="footer_menu_5" class="footer-menu--items"><li id="menu-item-758" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-758"><a href="#" data-i18n="footer.certifications">Certifications</a><ul class="sub-menu"><li id="menu-item-2068" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2068"><a href="https://www.wbenc.org/" target="_blank">Women Owned (WBENC)</a></li><li id="menu-item-2069" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2069"><a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/part-11-electronic-records-electronic-signatures-scope-and-application" target="_blank">FDA 21 CFR Part 11</a></li><li id="menu-item-2070" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2070"><a href="https://gdpr.eu/" target="_blank">GDPR Compliance</a></li><li id="menu-item-2071" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2071"><a href="https://www.iso.org/iso-9001-quality-management.html" target="_blank">ISO 9001:2015</a></li><li id="menu-item-2072" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2072"><a href="https://www.iso.org/iso-20000-1-it-service-management.html" target="_blank">ISO 20000-1:2018</a></li><li id="menu-item-2073" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2073"><a href="https://www.iso.org/iso-27001-information-security.html" target="_blank">ISO 27001:2022</a></li></ul></li></ul></div><div class="footer-menu"><div class="offices"><p class="offices-title" data-i18n="footer.officesTitle">
 Offices</p><ul class="offices-list"><li><div class="offices-item"><figure>
 <img width="25" height="25" src="images/USA-Cupertino.svg" class="attachment-full size-full" alt="Cupertino, USA" decoding="async" title="Cupertino, USA"></figure><p data-i18n="footer.offices.cupertino">Cupertino, USA</p></div></li><li><div class="offices-item"><figure>
 <img width="25" height="25" src="images/SaudiArabia.svg" class="attachment-full size-full" alt="Saudi Arabia, Jeddah" decoding="async" title="Saudi Arabia, Jeddah"></figure><p data-i18n="footer.offices.jeddah">Jeddah, Saudi Arabia</p></div></li><li><div class="offices-item"><figure>
@@ -2643,15 +3250,349 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isTablet) {
             // Ensure proper z-index and positioning on tablets
             if (mobileMenuOverlay) {
-                mobileMenuOverlay.style.zIndex = '10000';
+                mobileMenuOverlay.style.zIndex = '9999';
+                // Reset any conflicting styles
+                mobileMenuOverlay.style.pointerEvents = '';
+                mobileMenuOverlay.style.visibility = '';
+            }
+        } else {
+            // Reset tablet-specific styles when not in tablet mode
+            if (mobileMenuOverlay) {
+                mobileMenuOverlay.style.zIndex = '';
+                mobileMenuOverlay.style.pointerEvents = '';
+                mobileMenuOverlay.style.visibility = '';
             }
         }
+    }
+    
+    // Enhanced cleanup function for tablet navigation
+    function cleanupTabletMenu() {
+        if (mobileMenuOverlay) {
+            // Remove active state
+            mobileMenuOverlay.classList.remove('active');
+            // Reset body overflow
+            document.body.style.overflow = '';
+            // Reset any tablet-specific styles
+            mobileMenuOverlay.style.zIndex = '';
+            mobileMenuOverlay.style.pointerEvents = '';
+            mobileMenuOverlay.style.visibility = '';
+        }
+    }
+    
+    // Listen for page unload to cleanup tablet menu state
+    window.addEventListener('beforeunload', cleanupTabletMenu);
+    
+    // Listen for page visibility change to cleanup when tab is hidden
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            cleanupTabletMenu();
+        }
+    });
+    
+    // Enhanced mobile menu close with tablet cleanup
+    if (mobileMenuClose) {
+        mobileMenuClose.addEventListener('click', function() {
+            cleanupTabletMenu();
+        });
+    }
+    
+    // Enhanced overlay click with tablet cleanup
+    if (mobileMenuOverlay) {
+        mobileMenuOverlay.addEventListener('click', function(e) {
+            if (e.target === mobileMenuOverlay) {
+                cleanupTabletMenu();
+            }
+        });
     }
     
     // Call on load and resize
     handleTabletMenu();
     window.addEventListener('resize', handleTabletMenu);
+    
+    // Additional tablet-specific cleanup on navigation
+    document.addEventListener('click', function(e) {
+        // If clicking on a navigation link, cleanup tablet menu
+        if (e.target.closest('a[href]') && !e.target.closest('.mobile-menu-container')) {
+            const link = e.target.closest('a[href]');
+            if (link.href && !link.href.includes('#')) {
+                // External navigation - cleanup tablet menu
+                setTimeout(cleanupTabletMenu, 100);
+            }
+        }
+    });
+    
+    // Immediate cleanup on page load to prevent any lingering menu state
+    document.addEventListener('DOMContentLoaded', function() {
+        // Force cleanup any existing mobile menu state
+        cleanupTabletMenu();
+        
+        // Additional safety - hide mobile menu completely on non-tablet devices
+        const isTablet = window.innerWidth >= 769 && window.innerWidth <= 1024;
+        if (!isTablet && mobileMenuOverlay) {
+            mobileMenuOverlay.style.display = 'none';
+            mobileMenuOverlay.style.visibility = 'hidden';
+            mobileMenuOverlay.style.opacity = '0';
+            mobileMenuOverlay.style.pointerEvents = 'none';
+        }
+    });
+    
+    // Force cleanup on page focus to catch any missed states
+    window.addEventListener('focus', cleanupTabletMenu);
 });
+</script>
+
+<!-- Interactive MARLN Grid JavaScript -->
+<script>
+// MARLN Grid functionality
+(function() {
+    // Letter data mapping
+    const letterIcons = {
+        'M': 'users',
+        'A': 'shield',
+        'R': 'heart',
+        'L': 'crown',
+        'N': 'sparkles'
+    };
+
+    let selectedLetter = null;
+
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
+    // Function to get translation from existing localization system
+    function getTranslation(key) {
+        // First, try to get from existing DOM elements that have the translation (but skip description panel to avoid circular reference)
+        const descPanel = document.getElementById('marlnDescriptionPanel');
+        if (!descPanel || !descPanel.classList.contains('visible') || !key.includes('description')) {
+            const element = document.querySelector(`[data-i18n="${key}"]`);
+            if (element && element.textContent && element.textContent !== key && element.textContent !== 'Title' && element.textContent !== 'Description text goes here...') {
+                return element.textContent;
+            }
+        }
+        
+        // Use existing i18n system if available
+        if (typeof getNestedTranslation === 'function') {
+            const translation = getNestedTranslation(key);
+            if (translation && translation !== key) {
+                return translation;
+            }
+        }
+        
+        // Get current language
+        const currentLang = document.documentElement.getAttribute('lang') || 'en';
+        
+        // Try to get from the original static content if it exists
+        if (key === 'about.story.mentorship.description') {
+            return currentLang === 'ar' ? 
+                "M تمثل التوجيه، مما يسلط الضوء على تفاني Marln في دعم وتوجيه النساء في رحلاتهن المهنية." :
+                "M stands for Mentorship, highlighting Marln's dedication to supporting and guiding women in their professional journeys.";
+        } else if (key === 'about.story.advocacy.description') {
+            return currentLang === 'ar' ? 
+                "A تمثل المناصرة، حيث تدعم Marln بنشاط تقدم المرأة في التكنولوجيا." :
+                "A represents Advocacy, as Marln actively champions the advancement of women in technology.";
+        } else if (key === 'about.story.resilience.description') {
+            return currentLang === 'ar' ? 
+                "R تمثل المرونة، مما يعكس قوة وتصميم النساء في مواجهة تحديات عالم التكنولوجيا." :
+                "R signifies Resilience, reflecting the strength and determination of women navigating the challenges of the tech landscape.";
+        } else if (key === 'about.story.leadership.description') {
+            return currentLang === 'ar' ? 
+                "L تمثل القيادة، مما يؤكد على أهمية القيادة النسائية داخل المنظمة وفي قطاع التكنولوجيا." :
+                "L stands for Leadership, emphasizing the importance of female leadership within the organization and the tech sector.";
+        } else if (key === 'about.story.nurturing.description') {
+            return currentLang === 'ar' ? 
+                "N تجسد الرعاية، مما يمثل التزام Marln بإنشاء مجتمع داعم للنساء في التكنولوجيا." :
+                "N embodies Nurturing, representing Marln's commitment to creating a supportive community for women in tech.";
+        }
+        
+        // Title fallbacks
+        if (key === 'about.story.mentorship.title') {
+            return currentLang === 'ar' ? "التوجيه" : "Mentorship";
+        } else if (key === 'about.story.advocacy.title') {
+            return currentLang === 'ar' ? "المناصرة" : "Advocacy";
+        } else if (key === 'about.story.resilience.title') {
+            return currentLang === 'ar' ? "المرونة" : "Resilience";
+        } else if (key === 'about.story.leadership.title') {
+            return currentLang === 'ar' ? "القيادة" : "Leadership";
+        } else if (key === 'about.story.nurturing.title') {
+            return currentLang === 'ar' ? "الرعاية" : "Nurturing";
+        }
+        
+        return key;
+    }
+
+    // Get DOM elements
+    const letterCards = document.querySelectorAll('.marln-letter-card');
+    const descriptionPanel = document.getElementById('marlnDescriptionPanel');
+    const descriptionIcon = document.getElementById('marlnDescriptionIcon');
+    const descriptionTitle = document.getElementById('marlnDescriptionTitle');
+    const descriptionBody = document.getElementById('marlnDescriptionBody');
+    const closeButton = document.getElementById('marlnCloseButton');
+    const cta = document.getElementById('marlnCta');
+
+    if (!letterCards.length) return; // Exit if MARLN grid not found
+
+    // Add click event listeners to letter cards
+    letterCards.forEach(card => {
+        const letter = card.dataset.letter;
+        
+        card.addEventListener('click', () => {
+            handleLetterClick(letter, card);
+        });
+
+        // Add active state on mousedown
+        card.addEventListener('mousedown', () => {
+            card.classList.add('active');
+        });
+
+        card.addEventListener('mouseup', () => {
+            card.classList.remove('active');
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.classList.remove('active');
+        });
+    });
+
+    // Close button event listener
+    if (closeButton) {
+        closeButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeDescription();
+        });
+    }
+
+    function handleLetterClick(letter, cardElement) {
+        if (selectedLetter === letter) {
+            closeDescription();
+            return;
+        }
+
+        // Remove selected class from all cards
+        letterCards.forEach(card => card.classList.remove('selected'));
+        
+        // Add selected class to clicked card
+        cardElement.classList.add('selected');
+        
+        selectedLetter = letter;
+        showDescription(cardElement);
+    }
+
+    function showDescription(cardElement) {
+        if (!descriptionPanel) return;
+        
+        const titleKey = cardElement.dataset.titleKey;
+        const descKey = cardElement.dataset.descriptionKey;
+        const gradient = cardElement.dataset.gradient;
+        const icon = letterIcons[cardElement.dataset.letter];
+
+        // Update description panel content
+        
+        if (descriptionTitle && titleKey) {
+            descriptionTitle.setAttribute('data-i18n', titleKey);
+            const title = getTranslation(titleKey);
+            descriptionTitle.textContent = title || 'Title';
+        }
+        if (descriptionBody && descKey) {
+            descriptionBody.setAttribute('data-i18n', descKey);
+            const description = getTranslation(descKey);
+            descriptionBody.textContent = description || 'Description not found';
+        }
+        if (gradient) descriptionPanel.style.background = gradient;
+
+        // Update icon
+        if (descriptionIcon && icon) {
+            descriptionIcon.setAttribute('data-lucide', icon);
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        // Show description panel with animation
+        setTimeout(() => {
+            descriptionPanel.classList.add('visible');
+        }, 50);
+
+        // Hide CTA
+        if (cta) cta.classList.remove('visible');
+    }
+
+    function closeDescription() {
+        // Remove selected class from all cards
+        letterCards.forEach(card => card.classList.remove('selected'));
+        
+        // Hide description panel
+        if (descriptionPanel) {
+            descriptionPanel.classList.remove('visible');
+        }
+        
+        selectedLetter = null;
+        
+        // Show CTA again
+        if (cta) {
+            setTimeout(() => {
+                cta.classList.add('visible');
+            }, 300);
+        }
+    }
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && selectedLetter) {
+            closeDescription();
+        }
+    });
+
+    // Initialize icons and translations on load
+    function initializeTranslations() {
+        const currentLang = document.documentElement.getAttribute('lang') || 'en';
+        
+        // Update description panel if currently visible
+        if (descriptionPanel && descriptionPanel.classList.contains('visible')) {
+            const titleKey = descriptionTitle.getAttribute('data-i18n');
+            const descKey = descriptionBody.getAttribute('data-i18n');
+            
+            if (titleKey) {
+                const title = getTranslation(titleKey);
+                descriptionTitle.textContent = title;
+            }
+            
+            if (descKey) {
+                const description = getTranslation(descKey);
+                descriptionBody.textContent = description;
+            }
+        }
+        
+        // UI text is now handled by the main localization system via data-i18n attributes
+    }
+    
+    // Initialize icons on load
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+        
+        // Initialize translations immediately
+        initializeTranslations();
+        
+        // Also try again after a delay in case translations load asynchronously
+        setTimeout(initializeTranslations, 1000);
+    });
+
+    // Re-initialize if page language changes
+    if (typeof updatePageLanguage === 'function') {
+        const originalUpdateLanguage = updatePageLanguage;
+        updatePageLanguage = function(lang) {
+            originalUpdateLanguage(lang);
+            
+            // Wait for DOM to update, then refresh translations
+            setTimeout(() => {
+                initializeTranslations();
+            }, 200);
+        };
+    }
+})();
 </script>
 
 </body></html>

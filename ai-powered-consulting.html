@@ -1208,9 +1208,9 @@ html[data-theme="dark"] .mobile-menu-controls {
         box-shadow: -8px 0 25px rgba(0, 0, 0, 0.15);
     }
     
-    /* Ensure proper z-index for tablet */
+    /* Lower z-index to prevent conflicts */
     .mobile-menu-overlay {
-        z-index: 10000;
+        z-index: 9999;
     }
     
     /* Fix tablet menu positioning */
@@ -1224,6 +1224,99 @@ html[data-theme="dark"] .mobile-menu-controls {
         transform: translateX(0);
         -webkit-transform: translateX(0);
         -ms-transform: translateX(0);
+    }
+    
+    /* Prevent tablet menu from interfering with page content */
+    .mobile-menu-overlay:not(.active) {
+        pointer-events: none;
+        visibility: hidden;
+    }
+    
+    .mobile-menu-overlay.active {
+        pointer-events: auto;
+        visibility: visible;
+    }
+}
+
+/* Additional tablet-specific protections */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Prevent tablet menu from affecting page layout */
+    body:has(.mobile-menu-overlay.active) {
+        overflow: hidden;
+    }
+    
+    /* Ensure main content is properly positioned */
+    .hero-section,
+    .about-section,
+    .services-section,
+    .contact-section {
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Prevent tablet menu from overlapping critical content */
+    .mobile-menu-overlay {
+        isolation: isolate;
+    }
+    
+    /* Ensure proper stacking context */
+    .mobile-menu-container {
+        position: relative;
+        z-index: 2;
+    }
+}
+
+/* Final safety - ensure mobile menu is properly hidden when not active */
+.mobile-menu-overlay:not(.active) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateX(100%) !important;
+    -webkit-transform: translateX(100%) !important;
+    -ms-transform: translateX(100%) !important;
+}
+
+/* Force reset any conflicting styles but keep menu accessible */
+.mobile-menu-overlay:not(.active) * {
+    pointer-events: none !important;
+}
+
+/* Additional tablet safety - completely hide mobile menu on non-tablet devices */
+@media (min-width: 1025px) {
+    .mobile-menu-overlay {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+}
+
+/* Force hide mobile menu when page is not in tablet mode */
+@media (max-width: 768px), (min-width: 1025px) {
+    .mobile-menu-overlay:not(.active) {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transform: translateX(100%) !important;
+        -webkit-transform: translateX(100%) !important;
+        -ms-transform: translateX(100%) !important;
+    }
+}
+
+/* Nuclear option - completely remove mobile menu from non-tablet devices */
+@media (min-width: 1025px) {
+    .mobile-menu-overlay {
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
+        width: 1px !important;
+        height: 1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        margin: -1px !important;
+        padding: 0 !important;
+        border: 0 !important;
     }
 }
 
@@ -2881,14 +2974,94 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isTablet) {
             // Ensure proper z-index and positioning on tablets
             if (mobileMenuOverlay) {
-                mobileMenuOverlay.style.zIndex = '10000';
+                mobileMenuOverlay.style.zIndex = '9999';
+                // Reset any conflicting styles
+                mobileMenuOverlay.style.pointerEvents = '';
+                mobileMenuOverlay.style.visibility = '';
+            }
+        } else {
+            // Reset tablet-specific styles when not in tablet mode
+            if (mobileMenuOverlay) {
+                mobileMenuOverlay.style.zIndex = '';
+                mobileMenuOverlay.style.pointerEvents = '';
+                mobileMenuOverlay.style.visibility = '';
             }
         }
+    }
+    
+    // Enhanced cleanup function for tablet navigation
+    function cleanupTabletMenu() {
+        if (mobileMenuOverlay) {
+            // Remove active state
+            mobileMenuOverlay.classList.remove('active');
+            // Reset body overflow
+            document.body.style.overflow = '';
+            // Reset any tablet-specific styles
+            mobileMenuOverlay.style.zIndex = '';
+            mobileMenuOverlay.style.pointerEvents = '';
+            mobileMenuOverlay.style.visibility = '';
+        }
+    }
+    
+    // Listen for page unload to cleanup tablet menu state
+    window.addEventListener('beforeunload', cleanupTabletMenu);
+    
+    // Listen for page visibility change to cleanup when tab is hidden
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            cleanupTabletMenu();
+        }
+    });
+    
+    // Enhanced mobile menu close with tablet cleanup
+    if (mobileMenuClose) {
+        mobileMenuClose.addEventListener('click', function() {
+            cleanupTabletMenu();
+        });
+    }
+    
+    // Enhanced overlay click with tablet cleanup
+    if (mobileMenuOverlay) {
+        mobileMenuOverlay.addEventListener('click', function(e) {
+            if (e.target === mobileMenuOverlay) {
+                cleanupTabletMenu();
+            }
+        });
     }
     
     // Call on load and resize
     handleTabletMenu();
     window.addEventListener('resize', handleTabletMenu);
+    
+    // Additional tablet-specific cleanup on navigation
+    document.addEventListener('click', function(e) {
+        // If clicking on a navigation link, cleanup tablet menu
+        if (e.target.closest('a[href]') && !e.target.closest('.mobile-menu-container')) {
+            const link = e.target.closest('a[href]');
+            if (link.href && !link.href.includes('#')) {
+                // External navigation - cleanup tablet menu
+                setTimeout(cleanupTabletMenu, 100);
+            }
+        }
+    });
+    
+    // Immediate cleanup on page load to prevent any lingering menu state
+    document.addEventListener('DOMContentLoaded', function() {
+        // Force cleanup any existing mobile menu state
+        cleanupTabletMenu();
+        
+        // Additional safety - hide mobile menu completely on non-tablet devices
+        const isTablet = window.innerWidth >= 769 && window.innerWidth <= 1024;
+        if (!isTablet && mobileMenuOverlay) {
+            mobileMenuOverlay.style.display = 'none';
+            mobileMenuOverlay.style.visibility = 'hidden';
+            mobileMenuOverlay.style.opacity = '0';
+            mobileMenuOverlay.style.pointerEvents = 'none';
+        }
+    });
+    
+    // Force cleanup on page focus to catch any missed states
+    window.addEventListener('focus', cleanupTabletMenu);
 });
 </script>
 

@@ -59,7 +59,9 @@
         "title": "Nurturing",
         "description": "N embodies Nurturing, representing Marln's commitment to creating a supportive community for women in tech."
       },
-      "conclusion": "Today, we serve clients across 10+ countries, with over 50 enterprise deployments and a team of 200+ experts. Our commitment to innovation, quality, and female empowerment has made us a trusted partner for businesses worldwide while advancing the cause of women in technology."
+      "conclusion": "Today, we serve clients across 10+ countries, with over 50 enterprise deployments and a team of 200+ experts. Our commitment to innovation, quality, and female empowerment has made us a trusted partner for businesses worldwide while advancing the cause of women in technology.",
+      "cta": "Click on any letter to discover its meaning and impact",
+      "close": "Close"
     },
     "mission": {
       "title": "Mission",
