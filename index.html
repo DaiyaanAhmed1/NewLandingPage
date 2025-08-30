@@ -3576,17 +3576,17 @@ if (statisticsSection) {
 <style>
 /* Mobile Optimization for Golden Gate Bridge Parallax Section */
 @media (max-width: 768px) {
-    /* Aggressively remove white space between hero and bridge sections on mobile */
+    /* Provide proper spacing between hero and bridge sections on mobile */
     .services-hero-section-v_2.parallax:first-of-type {
-        margin-bottom: -50px !important;
-        padding-bottom: 0 !important;
+        margin-bottom: 4vh !important; /* Changed from -50px to positive margin */
+        padding-bottom: 5vh !important; /* Added positive padding */
         position: relative !important;
         z-index: 2 !important;
     }
     
     .services-hero-section-v_2.parallax:nth-of-type(2) {
-        margin-top: -50px !important;
-        padding-top: 0 !important;
+        margin-top: 2vh !important; /* Changed from -50px to positive margin */
+        padding-top: 3vh !important; /* Added positive padding */
         height: 60vh !important;
         min-height: 400px !important;
         max-height: 500px !important;
@@ -3623,17 +3623,17 @@ if (statisticsSection) {
 }
 
 @media (max-width: 480px) {
-    /* Small Mobile Optimization - Maximum white space removal */
+    /* Small Mobile Optimization - Proper spacing with breathing room */
     .services-hero-section-v_2.parallax:first-of-type {
-        margin-bottom: -80px !important;
-        padding-bottom: 0 !important;
+        margin-bottom: 3vh !important; /* Changed from -80px to positive margin */
+        padding-bottom: 4vh !important; /* Added positive padding */
         position: relative !important;
         z-index: 2 !important;
     }
     
     .services-hero-section-v_2.parallax:nth-of-type(2) {
-        margin-top: -80px !important;
-        padding-top: 0 !important;
+        margin-top: 1vh !important; /* Changed from -80px to positive margin */
+        padding-top: 2vh !important; /* Added positive padding */
         height: 50vh !important;
         min-height: 300px !important;
         max-height: 400px !important;
@@ -3647,19 +3647,19 @@ if (statisticsSection) {
 }
 
 @media (max-width: 320px) {
-    /* Tiny Mobile Optimization - Ultra aggressive white space removal */
+    /* Tiny Mobile Optimization - Proper spacing for very small screens */
     .services-hero-section-v_2.parallax:first-of-type {
-        margin-bottom: -100px !important;
-        padding-bottom: 0 !important;
+        margin-bottom: 2vh !important; /* Changed from -100px to positive margin */
+        padding-bottom: 3vh !important; /* Added positive padding */
         position: relative !important;
         z-index: 2 !important;
     }
     
     .services-hero-section-v_2.parallax:nth-of-type(2) {
-        margin-top: -100px !important;
-        padding-top: 0 !important;
+        margin-top: 1vh !important; /* Changed from -100px to positive margin */
+        padding-top: 2vh !important; /* Added positive padding */
         height: 45vh !important;
-        min-height: 250px !important;
+        min-height: 280px !important; /* Increased from 250px for better visibility */
         max-height: 350px !important;
         position: relative !important;
         z-index: 1 !important;
@@ -3676,12 +3676,73 @@ if (statisticsSection) {
         transform: none !important;
         background-attachment: scroll !important;
     }
+}
+
+/* Tablet-specific z-index fixes to prevent layering issues */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Ensure hero sections have proper z-index hierarchy on tablets */
+    .services-hero-section-v_2.parallax:first-of-type {
+        z-index: 5 !important; /* Higher than mobile but lower than desktop */
+        position: relative !important;
+    }
     
     .services-hero-section-v_2.parallax:nth-of-type(2) {
-        background-attachment: scroll !important;
-        background-size: cover !important;
-        background-position: center !important;
+        z-index: 4 !important; /* Lower than first hero but higher than other content */
+        position: relative !important;
     }
+    
+    /* Ensure hero images are properly layered */
+    .services-hero-section-v_2.parallax:first-of-type img {
+        z-index: 1 !important;
+        position: relative !important;
+    }
+    
+    .services-hero-section-v_2.parallax:nth-of-type(2) img {
+        z-index: 1 !important;
+        position: relative !important;
+    }
+    
+    /* Fix any potential z-index conflicts with other elements */
+    .services-hero-section-v_2.parallax {
+        isolation: isolate !important; /* Create new stacking context */
+    }
+    
+    /* Tablet-specific hero sizing optimizations */
+    .services-hero-section-v_2.parallax:first-of-type {
+        min-height: 45vh !important; /* Reduced from 60vh for better tablet fit */
+        max-height: 70vh !important; /* Reduced from 90vh */
+        height: 55vh !important; /* Optimized for tablet */
+    }
+    
+    .services-hero-section-v_2.parallax:nth-of-type(2) {
+        height: 8vh !important; /* Reduced from 10vh for better proportions */
+        min-height: 200px !important; /* Reduced from 270px */
+        max-height: 600px !important; /* Reduced from 800px */
+    }
+    
+    /* Tablet hero image optimizations */
+    .services-hero-section-v_2.parallax:first-of-type img {
+        object-position: center 25% !important; /* Better positioning for tablet */
+    }
+    
+    .services-hero-section-v_2.parallax:nth-of-type(2) img {
+        object-position: center 35% !important; /* Better bridge positioning for tablet */
+    }
+    
+    /* Tablet tagline optimization */
+    .services-hero-section-v_2.parallax:first-of-type .hero-tagline,
+    .services-hero-section-v_2.parallax:first-of-type p {
+        font-size: 1.1rem !important; /* Slightly smaller for tablet */
+        line-height: 1.5 !important;
+        max-width: 80% !important; /* Better width for tablet screens */
+        margin: 0 auto !important;
+    }
+}
+
+.services-hero-section-v_2.parallax:nth-of-type(2) {
+    background-attachment: scroll !important;
+    background-size: cover !important;
+    background-position: center !important;
 }
 
 /* Ensure smooth loading and prevent layout shift */
