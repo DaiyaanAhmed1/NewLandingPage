@@ -304,6 +304,26 @@ html[data-theme="dark"] #header .theme-toggle-button {
  #header .header--menu__list{flex-wrap:nowrap !important;gap:20px;align-items:center}
 }
 
+/* Tablet-specific header menu optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #header .header--menu__list {
+        flex-wrap: nowrap !important;
+        gap: 16px !important; /* Reduced gap for tablet */
+        align-items: center !important;
+        justify-content: center !important; /* Center align on tablet */
+    }
+    
+    /* Reduce theme toggle button size on tablet */
+    .menu-item-theme .theme-toggle {
+        transform: scale(0.85) !important; /* Slightly smaller on tablet */
+    }
+    
+    /* Reduce language toggle button size on tablet */
+    .menu-item-lang {
+        padding: 6px 12px 4px !important; /* Reduced padding for tablet */
+    }
+}
+
 
 
 
@@ -1374,6 +1394,36 @@ html[data-theme="dark"] .mobile-dropdown.active .mobile-dropdown-toggle {
     letter-spacing: 0.44px !important;
 }
 
+/* Tablet-specific header button size reduction */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #header .header--menu__list > li > a {
+        font-size: 12px !important; /* Reduced from 14px for tablet */
+        letter-spacing: 0.35px !important; /* Slightly reduced letter spacing */
+        padding: 8px 12px !important; /* Reduced padding for better fit */
+    }
+    
+    /* Reduce dropdown font size on tablet */
+    .company-dropdown a,
+    .services-dropdown a,
+    .sub-menu a,
+    .header--menu__list .sub-menu a {
+        font-size: 11px !important; /* Reduced from 12px for tablet */
+        letter-spacing: 0.3px !important;
+        padding: 8px 12px !important; /* Reduced padding */
+    }
+    
+    /* Reduce dropdown width on tablet for better fit */
+    .header--menu__list .sub-menu {
+        min-width: 400px !important; /* Reduced from 500px for tablet */
+        padding: 8px !important; /* Reduced padding */
+    }
+    
+    /* Reduce gap between menu items on tablet */
+    #header .header--menu__list {
+        gap: 16px !important; /* Reduced from 20px for tablet */
+    }
+}
+
 /* Dropdown Font - Same as Header Buttons */
 .company-dropdown a,
 .services-dropdown a,
@@ -1442,22 +1492,7 @@ html[data-theme="dark"] .mobile-dropdown.active .mobile-dropdown-toggle {
     border-radius: 4px !important;
 }
 
-/* Override any conflicting CSS from main stylesheet */
-.header--menu .sub-menu {
-    display: none !important;
-}
 
-.header--menu__list > li > .sub-menu {
-    display: none !important;
-}
-
-/* Force dropdown visibility when active */
-.header--menu__list .menu-item-has-children.dropdown-active .sub-menu {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    transform: translateX(-50%) translateY(0) !important;
-}
 
 /* Mobile dropdown positioning */
 .mobile-dropdown-menu {
@@ -3682,7 +3717,7 @@ if (statisticsSection) {
 @media (min-width: 769px) and (max-width: 1024px) {
     /* Ensure hero sections have proper z-index hierarchy on tablets */
     .services-hero-section-v_2.parallax:first-of-type {
-        z-index: 5 !important; /* Higher than mobile but lower than desktop */
+        z-index: 2 !important; /* Higher than mobile but lower than desktop */
         position: relative !important;
     }
     
@@ -3737,6 +3772,8 @@ if (statisticsSection) {
         max-width: 80% !important; /* Better width for tablet screens */
         margin: 0 auto !important;
     }
+    
+
 }
 
 .services-hero-section-v_2.parallax:nth-of-type(2) {
